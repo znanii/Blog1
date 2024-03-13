@@ -6,6 +6,10 @@ Added <%= @row['created_date'] %>
  </p>
 
 <h4>Comments:</h4>
+     <%@comments.each do |comment|%>
+	<%=comment['content']%>
+	<%=comment['created_date']%> <br>
+	<%end%>
 
     <form action="/details/<%=@row['id']%>" method="POST" role="form">
 	<textarea name="content" class="form-control" rows="6" placeholder="Type comment"></textarea>
