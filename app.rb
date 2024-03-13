@@ -16,14 +16,7 @@ end
 configure do
 	init_db
        @db.execute 'create table if not exists "Posts" ("id" integer primary key autoincrement,"created_date" date,"content" text)';  
-end
-
-get "/details/:id" do
-	post_id = params[:id]
-	results = @db.execute 'select * from Posts where id = ?', [post_id];
-	@row = results[0]
-
-	erb :details
+  	@db.execute 'create table if not exists "Comments" ("id" integer primary key autoincrement,"created_date" date,"content" text, "post_id" integer)';  
 end
 
 get '/' do
@@ -48,4 +41,20 @@ post '/new' do
 
 end
 
+get "/details/:id" do
+	post_id = params[:id]
+	results = @db.execute 'select * from Posts where id = ?', [post_id];
+	@row = results[0]
+
+	erb :details
+end
+
+post "/details/:id" do
+	post_id = params[:id]
+	content = params[:content]
+
+	@db.execute "insert into comments (content,created_date,post_id) values (?,datetime(),?)",[content,post_id];
+	
+	erb "#{content} for #{post_id}"
+end
 	
