@@ -18,6 +18,14 @@ configure do
        @db.execute 'create table if not exists "Posts" ("id" integer primary key autoincrement,"created_date" date,"content" text)';  
 end
 
+get "/details/:id" do
+	post_id = params[:id]
+	results = @db.execute 'select * from Posts where id = ?', [post_id];
+	@row = results[0]
+
+	erb :details
+end
+
 get '/' do
 	@results = @db.execute 'select * from Posts order by id desc';
 
@@ -38,4 +46,6 @@ post '/new' do
 	@db.execute "insert into posts (content,created_date) values (?,datetime())",[content];
 	redirect to ('/')
 
-end	
+end
+
+	
