@@ -55,6 +55,12 @@ end
 post "/details/:id" do
 	post_id = params[:id]
 	content = params[:content]
+	if content.length <=0
+	@error = "Enter the comment!"
+	erb "!"
+	sleep(1)
+	redirect to ('/details/' +post_id)
+	end
 
 	@db.execute "insert into comments (content,created_date,post_id) values (?,datetime(),?)",[content,post_id];
  	redirect to ('/details/' + post_id)
