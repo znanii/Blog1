@@ -2,14 +2,14 @@
 <br />
 <%=@row['content'] %>   <br>
 			<br>
-Added <%= @row['created_date'] %>
+Added by <%=@row['username']%>, <%= @row['created_date'] %>
  
 <br />
 <h4>Comments:</h4>
      <%@comments.each do |comment|%>
 <p>	<%=comment['content']%>
 	<br><br>
-	<span style="font-size: 75%; color: gray">Added at <%=comment['created_date']%></span> 
+	<span style="font-size: 75%"; color: "gray">Added at <%=comment['created_date']%></span> 
 </p>  <hr />
 	<%end%>
 

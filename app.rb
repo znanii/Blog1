@@ -15,7 +15,7 @@ end
 
 configure do
 	init_db
-       @db.execute 'create table if not exists "Posts" ("id" integer primary key autoincrement,"created_date" date,"content" text)';  
+       @db.execute 'create table if not exists "Posts" ("id" integer primary key autoincrement,"created_date" date,"content" text,"username" text)';  
   	@db.execute 'create table if not exists "Comments" ("id" integer primary key autoincrement,"created_date" date,"content" text, "post_id" integer)';  
 end
 
@@ -31,12 +31,13 @@ end
 
 post '/new' do
       content = params[:content]
+      username = params[:username]	
         if content.length <= 0
 	@error = "Type text"
 	return erb :new
 	end
 
-	@db.execute "insert into posts (content,created_date) values (?,datetime())",[content];
+	@db.execute "insert into posts (content,created_date,username) values (?,datetime(),?)",[content,username];
 	redirect to ('/')
 
 end
